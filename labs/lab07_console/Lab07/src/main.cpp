@@ -16,7 +16,7 @@ int main() {
     if (x0 > 0 and x0 <= 4)
     {
         double a = (4 - x0) / 10;
-        for (int i{ 1 }; i < 10; i++)
+        for (int i{ 0 }; i < 10; i++)
         {
             std::cout << sin(x0) / x0 << ' ';
             x0 = x0 + a;
@@ -34,6 +34,7 @@ int main() {
     long long x = 0;
     long long y = 1;
     long long z = 0;
+    long long sum = 1;
     int n = 1;
     if (max_value < 1)
     {
@@ -41,14 +42,22 @@ int main() {
     }
     else
     {
-        while (y <= max_value)
+        if (max_value < 2)
         {
-            n++;
-            z = y;
-            y = x + y;
-            x = z;
+            std::cout << 1 << ' ' << 1;
         }
-        std::cout << n-1 << ' ' << x;
+        else
+        {
+            while (sum <= max_value)
+            {
+                n++;
+                z = y;
+                y = x + y;
+                sum = sum + y;
+                x = z;
+            }
+            std::cout << n - 1 << ' ' << sum-y;
+        }
     }
     return 0;
 }
