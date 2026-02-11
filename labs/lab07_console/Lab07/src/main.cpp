@@ -10,9 +10,16 @@
 int main() {
     // Задание 1: вычисление значений функции.
     // Ввод: x0 — начальная точка интервала.
-    double x0 = 0.0;
-    if (!(std::cin >> x0)) {
-        return 0;
+    double x0;
+    std::cin >> x0;
+    if (x0 > 0 and x0 <= 4)
+    {
+        double a = (4 - x0) / 10;
+        for (int i{ 1 }; i < 10; i++)
+        {
+            std::cout << sin(x0) / x0 << ' ';
+            x0 = x0 + a;
+        }
     }
     // dfdfdf
     // // dfd/df
@@ -21,11 +28,29 @@ int main() {
 
     // Задание 2: сумма чисел Фибоначчи.
     // Ввод: MAX — ограничение на сумму.
-    long long max_value = 0;
-    if (!(std::cin >> max_value)) {
-        return 0;
+    long long max_value;
+    std::cin >> max_value;
+    long long x = 0;
+    long long y = 1;
+    long long z = 0;
+    int n = 1;
+    if (max_value < 1)
+    {
+        std::cout << 0 << ' ' << 0;
     }
-
-    // TODO: вычислите N и S (S <= MAX) и выведите результаты.
+    else
+    {
+        while (y <= max_value)
+        {
+            n++;
+            z = y;
+            y = x + y;
+            x = z;
+        }
+        std::cout << n-1 << ' ' << x;
+    }
     return 0;
 }
+    
+
+    // TODO: вычислите N и S (S <= MAX) и выведите результаты.
