@@ -89,10 +89,10 @@ void zadanie_3_1()
     std::cout << std::endl;
 }
 
-void zadanie_3_2(int arr_1[], int size_1, int arr_2[], int size_2, int result[])
+void zadanie_3_2(int arr_1[], int size_1, int arr_2[], int size_2)
 {
     int i = 0, j = 0, k = 0;
-    while (i < size_1 and j < size_2);
+    while (i <= size_1 and j <= size_2);
     {
         if (arr_1[i] <= arr_2[j])
         {
@@ -143,7 +143,7 @@ int main()
     int size_2 = 10;  //sizeof(Mass_4) / sizeof(Mass_4[0]);
     int size_3 = size_1 + size_2;
     result = new int[size_3];
-    zadanie_3_2(Mass_3, size_1, Mass_4, size_2, result);
+    zadanie_3_2(Mass_3, size_1, Mass_4, size_2);
     for (int i = 0; i < size_3; i++)
     {
         std::cout << result[i] << ' ';
