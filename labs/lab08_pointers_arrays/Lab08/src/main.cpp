@@ -92,7 +92,7 @@ void zadanie_3_1()
 void zadanie_3_2(int arr_1[], int size_1, int arr_2[], int size_2)
 {
     int i = 0, j = 0, k = 0;
-    while (i <= size_1 and j <= size_2)
+    while (i < size_1 and j < size_2)
     {
         if (arr_1[i] <= arr_2[j])
         {
