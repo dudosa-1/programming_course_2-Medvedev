@@ -9,7 +9,7 @@
 // - если несколько строк — в фиксированном порядке
 
 int Mass_1[10], Mass_2[10];
-int* Mass_3, * Mass_4, * result;
+int* Mass_3, * Mass_4, * result_1, * result_2;
 
 
 void zadanie_2(int a, int b)
@@ -89,7 +89,7 @@ void zadanie_3_1()
     std::cout << std::endl;
 }
 
-void zadanie_3_2(int arr_1[], int size_1, int arr_2[], int size_2)
+void zadanie_3_2_1(int arr_1[], int size_1, int arr_2[], int size_2, int result[])
 {
     int i = 0, j = 0, k = 0;
     while (i < size_1 and j < size_2)
@@ -120,6 +120,40 @@ void zadanie_3_2(int arr_1[], int size_1, int arr_2[], int size_2)
     }
 }
 
+void zadanie_3_2_2(int arr_1[], int size_1, int arr_2[], int size_2, int result[])
+{
+    int* q, * p, * l;
+    q = arr_1;
+    p = arr_2;
+    l = result;
+    while (q < &arr_1[size_1] and p < &arr_2[size_2])
+    {
+        if (*q <= *p)
+        {
+            *l = *q;
+            q++;
+        }
+        else
+        {
+            *l = *p;
+            p++;
+        }
+        l++;
+    }
+    while (q < &arr_1[size_1])
+    {
+        *l = *q;
+        q++;
+        l++;
+    }
+    while (p < &arr_2[size_2])
+    {
+        *l = *p;
+        p++;
+        l++;
+    }
+}
+
 int main()
 {
     
@@ -142,16 +176,24 @@ int main()
     Mass_4 = new int[10] {0, 3, 4, 5, 6, 13, 13, 14, 15, 16};
     int size_2 = 10;  //sizeof(Mass_4) / sizeof(Mass_4[0]);
     int size_3 = size_1 + size_2;
-    result = new int[size_3];
-    zadanie_3_2(Mass_3, size_1, Mass_4, size_2);
+    result_1 = new int[size_3];
+    result_2 = new int[size_3];
+    zadanie_3_2_1(Mass_3, size_1, Mass_4, size_2, result_1);
+    zadanie_3_2_2(Mass_3, size_1, Mass_4, size_2, result_2);
     for (int i = 0; i < size_3; i++)
     {
-        std::cout << result[i] << ' ';
+        std::cout << result_1[i] << ' ';
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < size_3; i++)
+    {
+        std::cout << result_2[i] << ' ';
     }
     std::cout << std::endl;
     delete[] Mass_3;
     delete[] Mass_4;
-    delete[] result;
+    delete[] result_1;
+    delete[] result_2;
     // Упражнение 4: линейный самоадресуемый список из 10 элементов.
     // TODO: сформируйте список и выведите элементы по порядку.
     return 0;
@@ -159,7 +201,6 @@ int main()
 
 /*
 l=10: n=53.14
-l=15.7: n=81.64
-m=456.8130081300...
+m=456
 sizeof(numbers) / sizeof(numbers[0])
 */
