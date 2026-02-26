@@ -36,6 +36,8 @@ void zadanie_1()
     std::cout << subs_ptr - str_1 << std::endl;
 }
 
+
+
 int main() {
     // Упражнения 1–3: демонстрация/анализ строковых функций (без ввода).
     // TODO: добавьте примеры и вывод результатов.
@@ -54,6 +56,8 @@ int main() {
         std::cin >> word;
         words.push_back(word);
     }
+    for (int i = 2; i < word_count; i += 2)             //задание 4
+        std::cout << words[i] << std::endl;
 
     // TODO: выведите слова с четными номерами (2, 4, 6, ...), по одному в строке.
     return 0;
