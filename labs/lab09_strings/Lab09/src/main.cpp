@@ -9,9 +9,37 @@
 // - без лишнего текста
 // - числа через пробел
 // - если несколько строк — в фиксированном порядке
+void zadanie_1()
+{
+                                                        //C++
+    std::string a;                                      
+    getline(std::cin, a);                               //1
+    std::cout << a <<std::endl;
+
+    std::cout << a.length() << std::endl;               //2
+
+    if (a.empty())                                      //3
+        std::cout << "empty\n";
+    else
+        std::cout << "not empty\n";
+    
+                                                        //C
+    char str_1[30]="Hallo ";                            
+    std::cout << strlen(str_1) << std::endl;            //1
+
+    char str_2[30];
+    strcpy_s(str_2, str_1);                             //2
+    std::cout << str_2 << std::endl;
+
+    char subs[] = "ll";
+    char* subs_ptr = strstr(str_1, subs);               //3
+    std::cout << subs_ptr - str_1 << std::endl;
+}
+
 int main() {
     // Упражнения 1–3: демонстрация/анализ строковых функций (без ввода).
     // TODO: добавьте примеры и вывод результатов.
+    zadanie_1();
 
     // Упражнение 4: ввод количества слов и самих слов.
     int word_count = 0;
