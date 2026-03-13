@@ -68,9 +68,11 @@ int main()
     d_ful = new int[size_ful]; //{17, 0, 1, 2, 3, 3, 3, 6, 10, 17};
     for (int i = 0; i < size_ful; i++) d_ful[i] = rand() % 18;
     std::sort(d_ful, d_ful + size_ful);
+    std::cout << size_ful * sizeof(int) << std::endl;
     for (int i = 0; i < size_ful; i++) std::cout << d_ful[i] << " ";
     std::cout<<std::endl;
     komp(d_ful, size_ful, d_komp);
+    std::cout << 18 * sizeof(int) << std::endl;
     unpac(d_komp, 18, d_ful, size_ful);
     delete[]d_ful;
     delete[]d_komp;

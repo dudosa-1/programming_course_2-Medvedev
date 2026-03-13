@@ -11,7 +11,7 @@
 // - числа через пробел
 // - если несколько строк — в фиксированном порядке
 
-bool isRoot(char* root, char* word) {
+bool Root(char* root, char* word) {
     int i = 0;
     while (root[i] != '\0') {
         if (root[i] != word[i]) {
@@ -27,7 +27,7 @@ int main() {
     char words[50][26];
     int wordCount = 0;
 
-    FILE* fin = fopen("input.txt", "r");
+    FILE* fin = fopen("text.txt", "r");
     if (fin == NULL) {
         printf("ERROR with [input] file");
         return 0;
@@ -41,59 +41,59 @@ int main() {
     }
     fclose(fin);
 
-    int longRootInd = -1;
+    int longInd = -1;
     int longRoot = -1;
 
-    int mostImportRootInd = -1;
-    int CountMostImportRoot = -1;
+    int mostRootInd = -1;
+    int CountMostRoot = -1;
 
 
     for (int i = 0; i < wordCount; ++i) {
-        int currentCount = 0; //текущие кол-во слов с этим корнем
+        int Count = 0; //текущие кол-во слов с этим корнем
 
         for (int j = 0; j < wordCount; ++j) {
-            if ((!(i == j)) and isRoot(words[i], words[j])) { currentCount++; }
+            if ((!(i == j)) and Root(words[i], words[j])) { Count++; }
         }
 
-        if (currentCount > 0) {
+        if (Count > 0) {
             int currentLength = strlen(words[i]); //текущая длинна слова
 
             if (currentLength > longRoot) {
                 longRoot = currentLength;
-                longRootInd = i;
+                longInd = i;
             }
 
-            if (currentCount > CountMostImportRoot) {
-                CountMostImportRoot = currentCount;
-                mostImportRootInd = i;
+            if (Count > CountMostRoot) {
+                CountMostRoot = Count;
+                mostRootInd = i;
             }
         }
     }
 
-    FILE* finish1 = fopen("output1.txt", "w");
-    if (longRootInd == -1) {
+    FILE* finish1 = fopen("fin1.txt", "w");
+    if (longInd == -1) {
         fprintf(finish1, "NO\n");
     }
     else {
-        fprintf(finish1, "%s:\n", words[longRootInd]);
+        fprintf(finish1, "%s:\n", words[longInd]);
         for (int j = 0; j < wordCount; ++j) {
-            if (longRootInd != j and isRoot(words[longRootInd], words[j])) {
+            if (longInd != j and Root(words[longInd], words[j])) {
                 fprintf(finish1, "%s\n", words[j]);
             }
         }
     }
     fclose(finish1);
 
-    FILE* finish2 = fopen("output2.txt", "w");
-    if (mostImportRootInd == -1) {
+    FILE* finish2 = fopen("fin2.txt", "w");
+    if (mostRootInd == -1) {
         fprintf(finish2, "NO\n");
     }
     else {
-        fprintf(finish2, "%s %d\n", words[mostImportRootInd], CountMostImportRoot); //str, целое число
+        fprintf(finish2, "%s %d\n", words[mostRootInd], CountMostRoot); //str, целое число
     }
     fclose(finish2);
 
-    std::cout << "successful completed" << std::endl;
+    std::cout << "completed" << std::endl;
 
     return 0;
 }
