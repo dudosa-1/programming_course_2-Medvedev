@@ -17,6 +17,17 @@ void print1(int** D1, int n) {
 	std::cout << "]" << std::endl;
 }
 
+void print2(int* D2, int n) {
+	std::cout << "[";
+	for (int i = 0; i < n; i++) {
+		std::cout << D2[i] + 1;
+		if (i < n - 1) std::cout << ",";
+	}
+	std::cout << "]";
+}
+
+
+
 bool lob(int** D1, int str, int stl, int n) {
 	for (int i = 0; i < str; i++) {
 		if (D1[i][stl] == 1) return false;
@@ -46,6 +57,31 @@ void sp1(int** D1, int str, int n) {
 	}
 }
 
+
+bool obh(int* D2, int str, int stl) {
+	for (int i = 0; i < str; i++) {
+		if (D2[i] == stl or abs(D2[i] - stl) == abs(str - i)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void sp2(int* D2, int str, int n) {
+	if (str == n) {
+		c2++;
+		print2(D2, n);
+		printf("\n");
+		return;
+	}
+	for (int stl = 0; stl < n; stl++) {
+		if (obh(D2, str, stl)) {
+			D2[str] = stl;
+			sp2(D2, str + 1, n);
+		}
+	}
+}
+
 int main(){
 	int n=4;
 	//std::cin >> n;
@@ -61,4 +97,7 @@ int main(){
 
 	sp1(D1, 0, n);
 	std::cout << c1 << std::endl;
+
+	sp2(D2, 0, n);
+	std::cout << c2 << std::endl;
 }
