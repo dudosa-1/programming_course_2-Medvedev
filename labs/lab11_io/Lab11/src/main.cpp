@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstring>
 
+
 // Lab 11
 // TODO: реализуйте решение по заданию в labs/lab11_io/README.md
 //

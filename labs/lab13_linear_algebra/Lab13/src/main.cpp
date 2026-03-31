@@ -1,11 +1,24 @@
 #include <iostream>
-#include <cstdlib>
+#include <fstream>
+
+
+void print1(float** A, int n, int m) {
+	for (int i = 0; i < n; i++) {
+		std::cout << "[";
+		for (int j = 0; j < m; j++) {
+			std::cout << A[i][j] << " ";
+		}
+		std::cout << "]" << std::endl;
+	}
+
+	printf("\n");
+}
 
 float eps = 0.000001;
-int system(int n, float** A, float* X)
+int system(int n, int m, float** A, float* X)
 {
 	int i, j, k, v;
-	for (i = 0; i < n - 1; i++)
+	for (i = 0; i < m - 1; i++)
 	{   /*выбор ведущего элемента A[v][i]*/
 		v = i;             /*выбор ведущего элемента: A[v][i]*/
 		for (j = i + 1; j < n; j++)
@@ -14,60 +27,69 @@ int system(int n, float** A, float* X)
 		else
 		{/*перестановка  i–го уравнения с  v–м*/
 			if (v != i)   /*перестановка  i–го уравнения с  v–м*/
-				for (j = i; j <= n; j++)
+				for (j = i; j <= m; j++)
 				{
 					int z = A[i][j]; A[i][j] = A[v][j]; A[v][j] = z;
 				}
-		 /*вычитание уравнений*/
-			for (k = i + 1; k < n; k++) /*вычитание уравнений*/
-			{
-				int c = A[k][i] / A[i][i];
-				for (j = i; j <= n; j++)
-					A[k][j] -= c * A[i][j];
+		}
+	}
+	print1(A, n, m);
+
+	for (i = 0; i < n; i++) {
+		double a = A[i][i];
+		for (j = i; j < m; j++) {
+			A[i][j] = A[i][j] / a;
+		}
+		for (j = i+1; j < n; j++) {
+			double b = A[j][i];
+			for (k = i; k < m; k++) {
+				A[j][k] = A[j][k] - A[i][k] * b;
 			}
 		}
+		print1(A, n, m);
 	}
-	/*обратный ход*/
-	for (i = n - 1; i >= 1; i--)
-	{
-		for (k = 0; k < i - 1; k++)     /*вычитание уравнений*/
-		{
-			int c = A[k][i] / A[i][i];
-			A[k][n] -= c * A[i][n];
-			A[k][i] = 0;
-		}
-	}
-	/*вычисление неизвестных*/
-	for (i = 0; i < n; i++)
-		X[i] = A[i][n] / A[i][i];
 	return 1;
 }
 
 int main() {
+	int n;
+	int m;
 
+	std::ifstream file("text1.txt");
+	if (file.is_open()) {
+		//int n;
+		file >> n;
+		//int m;
+		file >> m;
+	}
+	else return 0;
 
-	int n = 3;
+	/*FILE* file = fopen("text1.txt", "r");
+	if (file == NULL) {
+		printf("ERROR with FILE\n");
+		return 0;
+	}
+
+	if (fscanf(file, "%d %d", &n, &m) != 2) {
+		fclose(file);
+		return 0;
+	}
+
+	std::cout << n << " " << m << "\n"; */
+
 	float** D = new float* [n];
 	for (int i = 0; i < n; i++) {
-		D[i] = new float[n];
-		for (int j = 0; j < n; j++) {
-			D[i][j] = rand()%100;
+		D[i] = new float[m];
+		for (int j = 0; j < m; j++) {
+			file >> D[i][j];
 		}
 	}
 
 	float* X = new float[3] {1, 1, 1};
 
-	for (int i = 0; i < n; i++) {
-		std::cout << "[";
-		for (int j = 0; j < n; j++) {
-			std::cout << D[i][j] << " ";
-		}
-		std::cout << "]" << std::endl;
-	}
+	print1(D, n, m);
 
-	printf("\n");
-
-	int g = system(n, D, X);
+	int g = system(n, m, D, X);
 
 	if (g)           /* Единственное решение существует */
 	{
@@ -75,36 +97,11 @@ int main() {
 		printf("\n");
 	}
 	else printf("ERROR\n");
-	/*for (int i = 0; i < n - 1; i++) {
-		int v = i;             /*выбор ведущего элемента: A[v][i]*
-		for (int j = i + 1; j < n; j++)
-			if (abs(D[j][i]) > abs(D[v][i])) v = j;
-		if (v != i)   /*перестановка  i–го уравнения с  v–м*
-			for (int j = i; j <= n; j++)
-			{
-				int z = D[i][j]; 
-				D[i][j] = D[v][j]; 
-				D[v][j] = z;
-			}
-		for (int k = i + 1; k < n; k++) /*вычитание уравнений*
-		{
-			int c = D[k][i] / D[i][i];
-			for (int j = i; j <= n; j++)
-				D[k][j] -= c * D[i][j];
-		}
-	}
-   */
+	
 
-	for (int i = 0; i < n; i++) {
-		std::cout << "[";
-		for (int j = 0; j < n; j++) {
-			std::cout << D[i][j] << " ";
-		}
-		std::cout << "]" << std::endl;
-	}
-
-	printf("\n");
-
-
+	print1(D, n, m);
+	file.close();
+	delete[]D;
+	delete[]X;
     return 0;
 }
