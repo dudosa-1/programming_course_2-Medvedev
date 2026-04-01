@@ -1,8 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
 
 
-void print1(float** A, int n, int m) {
+void print1(double** A, int n, int m) {
 	for (int i = 0; i < n; i++) {
 		std::cout << "[";
 		for (int j = 0; j < m; j++) {
@@ -15,7 +16,7 @@ void print1(float** A, int n, int m) {
 }
 
 float eps = 0.000001;
-int system(int n, int m, float** A, float* X)
+int system(int n, int m, double** A)
 {
 	int i, j, k, v;
 	for (i = 0; i < m - 1; i++)
@@ -51,20 +52,29 @@ int system(int n, int m, float** A, float* X)
 	return 1;
 }
 
+void xi(double** matrix, int n, int m) {
+	m -= 1;
+	double* x = new double[m];
+
+	for (int i = m - 1; i >= 0; i--) {
+		x[i] = matrix[i][m];
+		for (int j = i + 1; j < m; j++) {
+			x[i] -= matrix[i][j] * x[j];
+		}
+	}
+	printf("Result:\n");
+	for (int i = 0; i < m; i++) {
+		printf("x%d = %.2lf\n", i + 1, x[i]);
+	}
+
+	delete[] x;
+}
+
 int main() {
 	int n;
 	int m;
 
-	std::ifstream file("text1.txt");
-	if (file.is_open()) {
-		//int n;
-		file >> n;
-		//int m;
-		file >> m;
-	}
-	else return 0;
-
-	/*FILE* file = fopen("text1.txt", "r");
+	FILE* file = fopen("C:\\Users\\medve\\source\\repos\\dudosa-1\\programming_course_2-Medvedev\\labs\\lab13_linear_algebra\\Lab13\\text1.txt", "r");
 	if (file == NULL) {
 		printf("ERROR with FILE\n");
 		return 0;
@@ -75,33 +85,30 @@ int main() {
 		return 0;
 	}
 
-	std::cout << n << " " << m << "\n"; */
-
-	float** D = new float* [n];
+	std::cout << n << " " << m << "\n"; 
+	m += 1;
+	double** D = new double* [n];
 	for (int i = 0; i < n; i++) {
-		D[i] = new float[m];
+		D[i] = new double[m];
+	}
+	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			file >> D[i][j];
+			fscanf(file, "%lf", &D[i][j]);
 		}
 	}
 
-	float* X = new float[3] {1, 1, 1};
+	fclose(file);
+
 
 	print1(D, n, m);
 
-	int g = system(n, m, D, X);
+	system(n, m, D);
+	xi(D, n, m);
 
-	if (g)           /* Единственное решение существует */
-	{
-		for (int i = 0; i < n; i++) printf("%8.3f", X[i]);
-		printf("\n");
-	}
-	else printf("ERROR\n");
-	
 
-	print1(D, n, m);
-	file.close();
+	//print1(D, n, m);
+	//for (int i = 0; i < n; i++) delete[] D[i];
 	delete[]D;
-	delete[]X;
+
     return 0;
 }
