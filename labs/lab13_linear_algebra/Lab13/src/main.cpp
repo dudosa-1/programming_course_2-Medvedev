@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
+FILE* file1 = fopen("C:\\Users\\st25.113\\source\\repos\\dudosa-1\\programming_course_2-Medvedev\\labs\\lab13_linear_algebra\\Lab13\\text2.txt", "w");
 
 
 void print1(double** A, int n, int m) {
@@ -10,6 +11,18 @@ void print1(double** A, int n, int m) {
 			std::cout << A[i][j] << " ";
 		}
 		std::cout << "]" << std::endl;
+	}
+
+	printf("\n");
+}
+
+void print2(double** A, int n, int m) {
+	for (int i = 0; i < n; i++) {
+		fprintf(file1, "[");
+		for (int j = 0; j < m; j++) {
+			fprintf(file1, " %.2lf", A[i][j]);
+		}
+		fprintf(file1, "]\n");
 	}
 
 	printf("\n");
@@ -48,7 +61,9 @@ int system(int n, int m, double** A)
 			}
 		}
 		print1(A, n, m);
+		
 	}
+	print2(A, n, m);
 	return 1;
 }
 
@@ -62,9 +77,9 @@ void xi(double** matrix, int n, int m) {
 			x[i] -= matrix[i][j] * x[j];
 		}
 	}
-	printf("Result:\n");
+	fprintf(file1, "Result:\n");
 	for (int i = 0; i < m; i++) {
-		printf("x%d = %.2lf\n", i + 1, x[i]);
+		fprintf(file1, "x%d = %.2lf\n", i + 1, x[i]);
 	}
 
 	delete[] x;
@@ -74,16 +89,17 @@ int main() {
 	int n;
 	int m;
 
-	FILE* file = fopen("C:\\Users\\medve\\source\\repos\\dudosa-1\\programming_course_2-Medvedev\\labs\\lab13_linear_algebra\\Lab13\\text1.txt", "r");
+	FILE* file = fopen("C:\\Users\\st25.113\\source\\repos\\dudosa-1\\programming_course_2-Medvedev\\labs\\lab13_linear_algebra\\Lab13\\text1.txt", "r");
 	if (file == NULL) {
 		printf("ERROR with FILE\n");
 		return 0;
 	}
-
+	
 	if (fscanf(file, "%d %d", &n, &m) != 2) {
 		fclose(file);
 		return 0;
 	}
+	if (n != m) return 0;
 
 	std::cout << n << " " << m << "\n"; 
 	m += 1;
@@ -99,12 +115,15 @@ int main() {
 
 	fclose(file);
 
-
 	print1(D, n, m);
 
+	
+
 	system(n, m, D);
+	
 	xi(D, n, m);
 
+	fclose(file1);
 
 	//print1(D, n, m);
 	//for (int i = 0; i < n; i++) delete[] D[i];

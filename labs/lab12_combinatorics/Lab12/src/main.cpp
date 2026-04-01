@@ -45,7 +45,7 @@ bool lob(int** D1, int str, int stl, int n) {
 void sp1(int** D1, int str, int n) {
 	if (str == n) {
 		c1++;
-		print1(D1, n);
+		//print1(D1, n);
 		return;
 	}
 	for (int stl = 0; stl < n; stl++) {
@@ -70,8 +70,8 @@ bool obh(int* D2, int str, int stl) {
 void sp2(int* D2, int str, int n) {
 	if (str == n) {
 		c2++;
-		print2(D2, n);
-		printf("\n");
+		//print2(D2, n);
+		//printf("\n");
 		return;
 	}
 	for (int stl = 0; stl < n; stl++) {
@@ -83,8 +83,8 @@ void sp2(int* D2, int str, int n) {
 }
 
 int main(){
-	int n=4;
-	//std::cin >> n;
+	int n;
+	std::cin >> n;
 	if (n <= 0) return 0;
 	int** D1 = new int* [n];
 	for (int i = 0; i < n; i++) {
