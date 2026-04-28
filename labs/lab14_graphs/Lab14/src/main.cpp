@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
 
@@ -90,27 +91,17 @@ void zad_2(const char* infile, const char* outfile) {
 
     fout << n << std::endl;
 
-    fout << "L[";
     for (int i = 0; i < n; i++) {
-        fout << L[i];
-        if (i != n - 1) fout << ", ";
+        fout << "L[" << i << "] = " << L[i] << std::endl;
     }
-    fout << "]" << std::endl;
-
-    fout << "S[";
+    fout << std::endl;
     for (int i = 0; i < n; i++) {
-        fout << S[i];
-        if (i != n - 1) fout << ", ";
+        fout << "S[" << i << "] = " << S[i] << std::endl;
     }
-    fout << "]" << std::endl;
-
-    fout << "D[";
+    fout << std::endl;
     for (int i = 0; i < c; i++) {
-        fout << D[i];
-        if (i != c - 1) fout << ", ";
+        fout << "D[" << i << "] = " << D[i] << std::endl;
     }
-    fout << "]" << std::endl;
-
     fout.close();
 
     for (int i = 0; i < n; i++) delete[] A[i];
@@ -118,6 +109,23 @@ void zad_2(const char* infile, const char* outfile) {
     delete[] S;
     delete[] D;
     delete[] U;
+}
+
+void zad_3(const char* infile, const char* outfile) {
+    std::ifstream fin(infile);
+    std::ofstream fout(outfile);
+
+    char buffer[256];
+    int n;
+    fin.getline(buffer, 256);
+    sscanf(buffer, "%d", &n);
+
+
+    fin.getline(buffer, 256);
+    int* L = new int[n];
+    for (int i = 0; i < n; i++) {
+        sscanf(buffer, "L[%d] = %d", &i, &L[i]);
+    }
 }
 
 int main() {
@@ -141,5 +149,9 @@ int main() {
     zad_2(output_1, output_2);
 
     std::cout << "zad_2 comp" << std::endl;
+
+    zad_3(output_2, output_3);
+
+    std::cout << "zad_3 comp" << std::endl;
     return 0;
 }
