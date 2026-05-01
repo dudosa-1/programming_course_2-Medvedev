@@ -120,12 +120,63 @@ void zad_3(const char* infile, const char* outfile) {
     fin.getline(buffer, 256);
     sscanf(buffer, "%d", &n);
 
-
-    fin.getline(buffer, 256);
     int* L = new int[n];
     for (int i = 0; i < n; i++) {
+        fin.getline(buffer, 256);
         sscanf(buffer, "L[%d] = %d", &i, &L[i]);
     }
+
+    fin.getline(buffer, 256);
+    
+    int* S = new int[n];
+    for (int i = 0; i < n; i++) {
+        fin.getline(buffer, 256);
+        sscanf(buffer, "S[%d] = %d", &i, &S[i]);
+    }
+
+    fin.getline(buffer, 256);
+
+    int c = S[n - 1] + L[n - 1];
+    int* D = new int[c];
+    for (int i = 0; i < c; i++) {
+        fin.getline(buffer, 256);
+        sscanf(buffer, "D[%d] = %d", &i, &D[i]);
+    }
+
+    fin.close();
+
+    int** A = new int* [n];
+    for (int i = 0; i < n; i++) {
+        A[i] = new int[n];
+        for (int j = 0; j < n; j++) {
+            A[i][j] = 0;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < L[i]; j++) {
+            A[i][D[j + S[i]] - 1] = 1;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (A[i][j] == 1) A[j][i] = 0;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (A[i][j] == 1) {
+                fout << i + 1 << " " << j + 1 << std::endl;
+            }
+        }
+    }
+
+    fout.close();
+
+    for (int i = 0; i < n; i++) delete[] A[i];
+    delete[] A;
 }
 
 int main() {
